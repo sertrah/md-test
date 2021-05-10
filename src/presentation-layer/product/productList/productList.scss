@@ -1,0 +1,16 @@
+.search_result{
+    .card:not(:last-child){
+        padding-bottom: 0.08rem;
+        &::after{
+            content: "";
+            position: absolute;
+            width: 95%;
+            background: var(--white-dark);
+            height: 0.08rem;
+            margin: auto;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+    }
+}

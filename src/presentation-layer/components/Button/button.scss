@@ -1,0 +1,25 @@
+.btn {
+    outline: 0;
+    padding: 0.4rem 0.7rem;
+    border: none;
+    line-height: 1em;
+    svg{
+        width: 16px;
+        height: 16px;
+    }
+    &--contained {
+        &.white-dark{
+            background-color: var(--white-dark);
+            color: var(--black);
+        }
+        &.secundary{
+            background-color: var(--secundary);
+            color: var(--white);
+        }
+        &.full{
+            width: 100%;
+            padding: 0.8em 0px;
+            border-radius: 4px;
+        }
+    }
+}

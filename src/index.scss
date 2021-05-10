@@ -1,0 +1,30 @@
+:root {
+  --white: #fff;
+  --white-dark: #eeeeee;
+  --black: #000 ;
+  --primary: #FFE600;
+  --secundary: #3483FA;
+  --gray: #666666;
+  --gray-dark: #333333;
+  --gray-light: #999999;
+  --green: #71d961;
+  --margin-16: 16px;
+  --margin-32: 32px;
+  --global-m-32: clamp(0.8em, calc(2 / 80 * 100vw), 1em);
+
+}
+*{
+  box-sizing: border-box;
+}
+body, html{
+  margin: 0;
+  padding: 0;
+  font-family: "Lato", sans-serif;
+  font-size: 18px;
+  background-color: var(--white-dark);
+}
+#container{
+  width:  95%;
+  max-width: 900px;
+  margin: auto;
+}

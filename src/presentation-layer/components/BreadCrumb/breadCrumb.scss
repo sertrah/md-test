@@ -1,0 +1,28 @@
+.breadcrumb {
+  list-style: none;
+  display: flex;
+  font-size: 14px;
+  margin-top: var(--margin-16);
+  margin-bottom: var(--margin-16);
+  padding: 0;
+  &-item {
+    color: var(--gray-light);
+    margin: 0rem 0.2rem;
+    &:not(:last-child):after {
+      content: ">";
+      margin-left: 0.4rem;
+    }
+    &:last-child {
+      font-weight: bold;
+    }
+    a {
+      text-decoration: none;
+      &:visited,
+      &:link,
+      &:active {
+        color: var(--gray-light);
+        text-decoration: none;
+      }
+    }
+  }
+}

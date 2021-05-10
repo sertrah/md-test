@@ -1,25 +1,48 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Suspense } from "react";
+import {
+  BrowserRouter as Router,
+  Redirect,
+  Route,
+  Switch,
+} from "react-router-dom";
+import routes from "application/routes";
+import { QueryClientProvider, QueryClient } from "react-query";
+import { HelmetProvider } from "react-helmet-async";
+
+import { AppLayout, Loader } from "presentation-layer/components";
+import { ROUTER_PATH_LIST } from "application/constants";
+import "App.scss";
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <QueryClientProvider client={queryClient}>
+      <HelmetProvider>
+        <Router basename="/">
+          <AppLayout>
+            <Suspense fallback={<Loader />}>
+              <Switch>
+                {routes.map(({ component: Component, ...rest }) => (
+                  <Route
+                    {...rest}
+                    key={rest.path}
+                    render={(props: any) => <Component {...props} />}
+                    exact
+                  />
+                ))}
+                <Redirect from="*" to={ROUTER_PATH_LIST.default} />
+              </Switch>
+            </Suspense>
+          </AppLayout>
+        </Router>
+      </HelmetProvider>
+    </QueryClientProvider>
   );
 }
 
