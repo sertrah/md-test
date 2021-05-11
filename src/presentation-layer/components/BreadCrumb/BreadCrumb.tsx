@@ -1,14 +1,16 @@
 import React, { FunctionComponent } from "react"; // importing FunctionComponent
+import { CategoryItems } from "application/models/Category.model";
 
-const Breadcrumb: FunctionComponent = () => {
+const Breadcrumb: FunctionComponent<{
+  items: CategoryItems[];
+}> = ({ items }) => {
   return (
     <ol className="breadcrumb" aria-label="breadcrumb">
-      <li className="breadcrumb-item">
-        <a href="#">Home</a>
-      </li>
-      <li className="breadcrumb-item active" aria-current="page">
-        Library
-      </li>
+      {items.map(({ id, name }) => (
+        <li className="breadcrumb-item" key={id}>
+          {name}
+        </li>
+      ))}
     </ol>
   );
 };

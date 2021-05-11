@@ -11,6 +11,8 @@ import { HelmetProvider } from "react-helmet-async";
 
 import { AppLayout, Loader } from "presentation-layer/components";
 import { ROUTER_PATH_LIST } from "application/constants";
+import {  ReferenceCategoryContextProvider } from "application/contexts/CategoryContext"
+
 import "App.scss";
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -21,9 +23,11 @@ const queryClient = new QueryClient({
 });
 
 function App() {
+
   return (
     <QueryClientProvider client={queryClient}>
       <HelmetProvider>
+      <ReferenceCategoryContextProvider>
         <Router basename="/">
           <AppLayout>
             <Suspense fallback={<Loader />}>
@@ -41,6 +45,7 @@ function App() {
             </Suspense>
           </AppLayout>
         </Router>
+        </ReferenceCategoryContextProvider>
       </HelmetProvider>
     </QueryClientProvider>
   );

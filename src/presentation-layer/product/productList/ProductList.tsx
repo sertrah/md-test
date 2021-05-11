@@ -1,7 +1,7 @@
-import React, { FC, MouseEvent } from "react";
+import React, { FC, MouseEvent, useContext } from "react";
 import { Card } from "presentation-layer/components";
 import { useQuery } from "react-query";
-import { productService } from "application/services/Product.services";
+import { searchResultService } from "application/services/SearchResult.services";
 import useQueryPath from "application/hooks/useQueryPath";
 import { useHistory } from "react-router-dom";
 import { ROUTER_PATH_LIST } from "application/constants";
@@ -9,6 +9,8 @@ import { Helmet } from "react-helmet-async";
 import { ReactComponent as Loupe } from "presentation-layer/assets/loupeX.svg";
 import { isEmpty } from "lodash";
 import { SearchResult } from "application/models/SearchResult.model";
+import { maxBy } from "lodash";
+import { ReferenceCategoryContext } from "application/contexts/CategoryContext"
 
 const ResultView: FC<{ searchResult: SearchResult, searchParam: string }> = ({ searchResult, searchParam }) => {
   const history = useHistory();
@@ -57,13 +59,18 @@ const getGreetings = (): string => {
 
 export default function ProductList() {
   const [queryString] = useQueryPath();
+  const { setCategoryId } = useContext(ReferenceCategoryContext);
 
-  const { data: searchResult } = useQuery(
+  const { data: searchResult, isLoading } = useQuery(
     `search-${queryString.search}`,
-    () => productService.getProductsByName(queryString.search),
+    () => searchResultService.getSearchResultByName(queryString.search),
     {
       retry: 1,
       retryDelay: 3000,
+      onSuccess: ({mostPopularCategories})=> {
+        const categoryMostPopular: {categoryId: string, total: number} | undefined = maxBy(mostPopularCategories, function(o) { return o.total; });
+        setCategoryId(categoryMostPopular?.categoryId);
+      },
       onError: ({ message }) => {
         console.error(message);
       },
@@ -85,7 +92,7 @@ export default function ProductList() {
           <ResultView searchResult={searchResult} searchParam={queryString.search} />
         </section>
       ) : (
-        <section>
+        isLoading ? <>Cargando... </> : <section>
           <h1>Primero que nada. {getGreetings()}</h1>
           <p>Busca el producto que deseas</p>
         </section>

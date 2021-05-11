@@ -8,7 +8,7 @@ import { parse, ParseOptions, stringify } from "query-string";
  * - queryString: parsed querystring as an object
  * - setQueryString: function to set queryString with an object
  */
-const useQueryPath = ( page?: string, options?: ParseOptions): any => {
+const useQueryPath = ( page?: string, options?: ParseOptions): [any, (obj: any) => void] => {
   const history = useHistory();
   const location = useLocation();
 

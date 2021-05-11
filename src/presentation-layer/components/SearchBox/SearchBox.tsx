@@ -4,7 +4,7 @@ import { ReactComponent as Logo } from "presentation-layer/assets/loupe.svg";
 import useQueryPath from "application/hooks/useQueryPath";
 
 const SearchBox: FC<any> = ({ onChange, value, placeholder }) => {
-  const [setQueryString] = useQueryPath("items");
+  const [,setQueryString] = useQueryPath("items");
 
   const handleChange = ({ target }: { target: { value: string } }) =>
     onChange(target.value);
